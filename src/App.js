@@ -46,6 +46,13 @@ function App() {
     setTodos(newTodos)
   }
 
+  const newTask = () =>{
+    let task = prompt("Agrega tu tarea:")
+    const newTodos = [...todos]
+    newTodos.push({text: task, completed: false})
+    setTodos(newTodos)
+  }
+
   return (
     <React.Fragment>
       <TodoCounter 
@@ -70,7 +77,7 @@ function App() {
         ))}
       </TodoList>
 
-      <CreateTodoButton />
+      <CreateTodoButton onClick={() => newTask()} />
     </React.Fragment>
   );
 }
