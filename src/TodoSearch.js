@@ -8,7 +8,7 @@ function TodoSearch( {searchValue, setSearchValue} ){
   }
   return(
     <input 
-      placeholder="Add a Todo Item" 
+      placeholder="Buscar tarea" 
       className="form-control" 
       value={searchValue}
       onChange={onSearchValueChange}

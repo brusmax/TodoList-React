@@ -12,12 +12,12 @@ function TodoItem(props){
     <li className={`list-group-item TodoItem ${props.completed && 'list-group-item-success'}`}>
         <span 
         className={`Icon Icon-check badge ${!props.completed && 'badge-info'} badge-pill ${props.completed && 'badge-success'}`}
-        onClick={onClomplete}
+        onClick={props.onComplete}
         > √ </span>
         {props.text}
         <span 
           className="Icon Icon-delete badge badge-danger badge-pill"
-          onClick={onDelete}
+          onClick={props.onDelete}
           >X</span>
     </li>
   )
