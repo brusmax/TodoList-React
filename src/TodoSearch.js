@@ -3,7 +3,7 @@ import './TodoSearch.css'
 
 function TodoSearch(){
   return(
-    <React.Fragment />
+    <input placeholder="Add a Todo Item" className="form-control"  />
   )
 }
 

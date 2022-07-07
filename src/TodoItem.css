@@ -1,0 +1,13 @@
+.TodoItem{
+  text-align: left;
+}
+.TodoItem .Icon{
+  display: block;
+  margin-right: 20px;
+}
+.TodoItem .Icon-check{
+  float: left;
+}
+.TodoItem .Icon-delete{
+  float: right;
+}

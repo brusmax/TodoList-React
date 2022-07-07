@@ -4,11 +4,10 @@ import './TodoList.css'
 function TodoList(props){
   return(
     <section>
-      <ul>
-        {props.childen}
+      <ul className="list-group">
+        {props.children}
       </ul>
     </section>
-      
   )
 }
 
