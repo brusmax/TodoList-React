@@ -7,9 +7,34 @@ const defaultTodos = [
   { text: 'Ir a correr', completed: true },
 ]
 
+function useLocalStorage(itemName, initialValue){
+  const localStorageItem = localStorage.getItem(itemName)
+  let parsedItems 
+
+  if(!localStorageItem){
+    localStorage.setItem(itemName, JSON.stringify(initialValue))
+    parsedItems = initialValue
+  }else{
+    parsedItems = JSON.parse(localStorageItem)
+  }
+
+  const [item, setItem] = React.useState(parsedItems)
+
+  const saveItems = (newTodos) => {
+    let stringTodos = JSON.stringify(newTodos)
+    localStorage.setItem(itemName, stringTodos)
+    setItem(newTodos)
+  }
+  return [
+    item,
+    saveItems
+  ]
+}
+
 
 function App() {
-  const [todos, setTodos] = React.useState(defaultTodos)
+  const [todos, saveTodos] = useLocalStorage('TODOS_V1', [])
+  
   const [searchValue, setSearchValue] = React.useState('')
 
   const completedTodos = todos.filter( todo => !!todo.completed ).length
@@ -27,25 +52,28 @@ function App() {
     });
   }
 
+  
+
   const completeTodo = (text) => {
     const todoIndex = todos.findIndex( todo => todo.text === text)
     const newTodos = [...todos]
     newTodos[todoIndex].completed = true
-    setTodos(newTodos)
+    saveTodos(newTodos);
+    //const [todos, newTodos] = useLocalStorage('TODOS_V1', [])
   }
 
   const deleteTodo = (text) => {
     const todoIndex = todos.findIndex( todo => todo.text === text)
     const newTodos = [...todos]
     newTodos.splice(todoIndex, 1)
-    setTodos(newTodos)
+    saveTodos(newTodos);
   }
 
   const newTask = () =>{
     let task = prompt("Agrega tu tarea:")
     const newTodos = [...todos]
     newTodos.push({text: task, completed: false})
-    setTodos(newTodos)
+    saveTodos(newTodos);
   }
 
   return (
