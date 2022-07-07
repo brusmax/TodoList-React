@@ -11,3 +11,6 @@
 .TodoItem .Icon-delete{
   float: right;
 }
+.list-group-item-success{
+  text-decoration: line-through;
+}

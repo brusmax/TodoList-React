@@ -2,14 +2,23 @@ import React from "react";
 import './TodoItem.css'
 
 function TodoItem(props){
+  const onClomplete = () => {
+    alert('listo con '+ props.text)
+  }
+  const onDelete = () => {
+    alert('deleted: '+ props.text)
+  }
   return(
-    <li className="list-group-item TodoItem">
-      <p className={`TodoItem-p ${props.completed} && 'TodoITem-p--completed' `}>
-        <span className={`Icon Icon-check badge badge-info badge-pill ${props.completed} && 'badge-success'`}> √ </span>
+    <li className={`list-group-item TodoItem ${props.completed && 'list-group-item-success'}`}>
+        <span 
+        className={`Icon Icon-check badge ${!props.completed && 'badge-info'} badge-pill ${props.completed && 'badge-success'}`}
+        onClick={onClomplete}
+        > √ </span>
         {props.text}
-        <span className="Icon Icon-delete badge badge-danger badge-pill">X</span>
-      </p>
-      
+        <span 
+          className="Icon Icon-delete badge badge-danger badge-pill"
+          onClick={onDelete}
+          >X</span>
     </li>
   )
 }
