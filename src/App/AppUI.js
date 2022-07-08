@@ -7,6 +7,9 @@ import { TodoList } from '../TodoList'
 import { TodoItem } from '../TodoItem'
 import { Modal } from '../Modal'
 import { TodoForm } from '../TodoForm'
+import { TodoError } from "../TodoError/index.js"
+import { TodosLoading } from "../TodosLoading"
+import { EmptyTodos } from "../EmptyTodos"
 import { PromiseProvider } from "mongoose"
 import './App.css'
 
@@ -35,9 +38,9 @@ function AppUI(){
 
       
       <TodoList>
-        {error && <p>Huy, hubo un error....</p>}
-        {loading && <p>Cargando...</p>}
-        {(!loading && !searchedTodos) && <p>Crea tu primer TODO.</p>}
+        {error && <TodoError error={error} />}
+        {loading && <TodosLoading />}
+        {(!loading && !searchedTodos) && <EmptyTodos />}
 
         {searchedTodos.map(todo => (
           <TodoItem

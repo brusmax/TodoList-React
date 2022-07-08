@@ -1,4 +1,5 @@
 import React from "react";
+import { IoCheckmarkCircleSharp, IoEllipseOutline, IoTrashOutline } from 'react-icons/io5';
 import './TodoItem.css'
 
 function TodoItem(props){
@@ -13,12 +14,12 @@ function TodoItem(props){
         <span 
         className={`Icon Icon-check badge ${!props.completed && 'badge-info'} badge-pill ${props.completed && 'badge-success'}`}
         onClick={props.onComplete}
-        > √ </span>
+        > {props.completed && <IoCheckmarkCircleSharp />} {!props.completed && <IoEllipseOutline />} </span>
         {props.text}
         <span 
           className="Icon Icon-delete badge badge-danger badge-pill"
           onClick={props.onDelete}
-          >X</span>
+          > <IoTrashOutline /> </span> 
     </li>
   )
 }
