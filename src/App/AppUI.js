@@ -5,8 +5,10 @@ import { TodoSearch } from '../TodoSearch'
 import { CreateTodoButton } from '../CreateTodoButton'
 import { TodoList } from '../TodoList'
 import { TodoItem } from '../TodoItem'
-import './App.css'
+import { Modal } from '../Modal'
+import { TodoForm } from '../TodoForm'
 import { PromiseProvider } from "mongoose"
+import './App.css'
 
 // const newTask = () =>{
   //   let task = prompt("Agrega tu tarea:")
@@ -22,6 +24,9 @@ function AppUI(){
     searchedTodos,
     completeTodo,
     deleteTodo,
+    openModal,
+    setOpenModal,
+
   } = React.useContext(TodoContext);
   return(
     <React.Fragment>
@@ -45,7 +50,15 @@ function AppUI(){
         ))}
       </TodoList>
 
-      <CreateTodoButton  />
+      {!!openModal && (
+        <Modal>
+          <TodoForm />
+        </Modal>
+      )}
+
+      <CreateTodoButton 
+        setOpenModal={setOpenModal} 
+      />
     </React.Fragment> 
   )
 }
