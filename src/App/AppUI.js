@@ -8,6 +8,8 @@ import './App.css'
 import { PromiseProvider } from "mongoose"
 
 function AppUI({
+  loading,
+  error,
   totalTodos,
   completedTodos,
   searchValue,
@@ -30,6 +32,10 @@ function AppUI({
        /> 
 
       <TodoList>
+        {error && <p>Huy, hubo un error....</p>}
+        {loading && <p>Cargando...</p>}
+        {(!loading && !searchedTodos) && <p>Crea tu primer TODO.</p>}
+
         {searchedTodos.map(todo => (
           <TodoItem
             key={todo.text}

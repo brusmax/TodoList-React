@@ -8,34 +8,61 @@ const defaultTodos = [
 ]
 
 function useLocalStorage(itemName, initialValue){
-  const localStorageItem = localStorage.getItem(itemName)
-  let parsedItems 
+  const [loading, setLoading] = React.useState(true)
+  const [error, setError] = React.useState(false)
+  const [item, setItem] = React.useState(initialValue)
+  React.useEffect(()=>{
+    setTimeout(() => {
+      try{
+        const localStorageItem = localStorage.getItem(itemName)
+        let parsedItems 
 
-  if(!localStorageItem){
-    localStorage.setItem(itemName, JSON.stringify(initialValue))
-    parsedItems = initialValue
-  }else{
-    parsedItems = JSON.parse(localStorageItem)
+        if(!localStorageItem){
+          localStorage.setItem(itemName, JSON.stringify(initialValue))
+          parsedItems = initialValue
+        }else{
+          parsedItems = JSON.parse(localStorageItem)
+        }
+
+        setItem(parsedItems)
+        setLoading(false)
+      }catch(e){
+        console.error(e)
+        setError(e)
+      }
+
+    }, 1000)
+  })
+
+  
+
+  const saveItem = (newItem) => {
+    try{
+      let stringItem = JSON.stringify(newItem)
+      localStorage.setItem(itemName, stringItem)
+      setItem(newItem)
+    }catch(e){
+      setError(e)
+    }
+    
   }
-
-  const [item, setItem] = React.useState(parsedItems)
-
-  const saveItems = (newTodos) => {
-    let stringTodos = JSON.stringify(newTodos)
-    localStorage.setItem(itemName, stringTodos)
-    setItem(newTodos)
-  }
-  return [
+  return {
     item,
-    saveItems
-  ]
+    saveItem,
+    loading,
+    error,
+  }
 }
 
 
 function App() {
-  const [todos, saveTodos] = useLocalStorage('TODOS_V1', [])
-  
-  const [searchValue, setSearchValue] = React.useState('')
+  const {
+    item: todos,
+    saveItem: saveTodos,
+    loading,
+    error,
+  } = useLocalStorage('TODOS_V1', []);
+  const [searchValue, setSearchValue] = React.useState('');
 
   const completedTodos = todos.filter( todo => !!todo.completed ).length
   const totalTodos = todos.length
@@ -78,6 +105,8 @@ function App() {
 
   return (
     <AppUI
+    loading={loading}
+    error={error}
     totalTodos={totalTodos}
     completedTodos={completedTodos}
     searchValue={searchValue}
